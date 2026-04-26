@@ -1,17 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10">
+          <ion-title>
+            ButacaApp
+          </ion-title>
+
+        </ion-col>
+        <ion-col size="2">
+          imagen de perfil
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content fullscreen="true">
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+      <span class="badge"></span>
+      <h1>Nombre Pelicula</h1>
+      <p>Descripcion Pelicula</p>
+
+      <ion-button>
+        Ver Trailer
+      </ion-button>
+      <ion-button fill="outline">
+        <ion-icon name="add-outline"></ion-icon> Agregar
+      </ion-button>
+    </div>
+
+  </div>
+
 </ion-content>
