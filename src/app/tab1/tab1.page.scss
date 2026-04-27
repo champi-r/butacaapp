@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap');
+
+
+.header {
+    background-color: #000000;
+}
+
+.header__logo,
+.header__avatar {
+  width: 50px;
+  height: auto;
+}
+
+.header__titulo {
+    color: #E50914 ;
+    font-family: "Contrail One", sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    padding-left: 10px;
+}
