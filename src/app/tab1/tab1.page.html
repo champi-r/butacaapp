@@ -7,7 +7,7 @@
             <ion-img src="../../assets/img/logo-butaca.png" alt="Logo Butaca App" class="header__logo">
             </ion-img>
             <ion-title class="header__titulo">
-              ButacaApp
+              utacaApp
             </ion-title>
 
           </ion-row>
@@ -28,10 +28,10 @@
 
     <div class="overlay"></div>
 
-    <div class="hero-content">
+    <div class="hero-content" *ngFor="let pelicula of listaPeliculas">
       <span class="badge"></span>
-      <h1>Nombre Pelicula</h1>
-      <p>Descripcion Pelicula</p>
+      <h1> {{pelicula.title}} </h1>
+      <p>{{pelicula.overview}}</p>
 
       <ion-button>
         Ver Trailer
