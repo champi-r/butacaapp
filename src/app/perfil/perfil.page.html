@@ -1,0 +1,128 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid class="header">
+      <ion-row>
+        <ion-col size="10">
+          <ion-row>
+            <ion-img src="../../assets/img/logo-butaca.png" alt="Logo Butaca App" class="header__logo">
+            </ion-img>
+            <ion-title class="header__titulo">
+              utacaApp
+            </ion-title>
+
+          </ion-row>
+        </ion-col>
+        <ion-col size="2">
+          <ion-avatar class="header__avatar">
+            <img alt="Silhouette of a person's head" src="../../assets/img/avatar-user.jpg" />
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content_color ion-padding">
+    <div class="photo-container">
+      <ion-thumbnail class="profile-photo">
+        <img src="assets/img/avatar-user.jpg" alt="Foto de perfil" />
+      </ion-thumbnail>
+
+      <ion-fab-button color="danger" size="small" class="edit-btn">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-fab-button>
+    </div>
+
+    <div class="ion-margin-top">
+      <h1 class="user-name">Nombre<br>Usuario</h1>
+      <p class="user-bio">
+        Descripción breve del usuario.
+      </p>
+    </div>
+
+    <ion-grid class="ion-no-padding ion-margin-top">
+      <ion-row>
+        <ion-col size="4">
+          <div class="stat-value color_list_number">438</div>
+          <div class="stat-label">Peliculas vistas</div>
+        </ion-col>
+        <ion-col size="4">
+          <div class="stat-value color_list_number">124</div>
+          <div class="stat-label">Reviews escritas</div>
+        </ion-col>
+        <ion-col size="4">
+          <div class="stat-value color_list_number">8.2k</div>
+          <div class="stat-label">Seguidores</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- Tu segmento actual -->
+  <div class="content_color">
+    <ion-segment #segmento value="favoritos">
+      <ion-segment-button value="favoritos">
+        <ion-label>Favoritos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="watchlist">
+        <ion-label>Watchlist</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="notas">
+        <ion-label>Mis notas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- CONTENEDOR DINÁMICO -->
+  <div class="dynamic-container ion-padding">
+    <!-- Sección Favoritos (Se muestra si el valor del segmento es 'favoritos') -->
+    <div *ngIf="segmento.value === 'favoritos'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="movie-placeholder">Película 1</div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="movie-placeholder">Película 2</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <div class="movie-placeholder">Película 3</div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="movie-placeholder">Película 4</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Sección Watchlist -->
+    <div *ngIf="segmento.value === 'watchlist'">
+      <ion-list>
+        <ion-item color="dark">
+          <ion-label>Dune: Part Two</ion-label>
+        </ion-item>
+         <ion-item color="dark">
+          <ion-label>Dune: Part Two</ion-label>
+        </ion-item>
+         <ion-item color="dark">
+          <ion-label>Dune: Part Two</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Sección Notas -->
+    <div *ngIf="segmento.value === 'notas'">
+      <ion-card color="medium">
+        <ion-card-header>
+          <ion-label color="light">Nota - Mes, 15 2026  </ion-label>
+          <ion-card-title>Nota titulo</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
