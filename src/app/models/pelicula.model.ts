@@ -4,15 +4,16 @@ export interface Pelicula {
   release_date: string;
   vote_average: number;
   poster_path: string;
+  overview: string;
+  popularity: number;
   genre_ids: number[];
-  // -- DATOS INYECTADOS LOCALMENTE (Opcionales) --
   director?: string; 
-  nombres_generos?: string[]; // Para guardar ["Sci-Fi", "Thriller"]
+  nombres_generos?: string[]; 
 }
 
 export interface RespuestaTMDB {
   page: number;
-  results: Pelicula[]; // Acá es donde realmente vive tu arreglo
+  results: Pelicula[]; 
   total_pages: number;
   total_results: number;
 }

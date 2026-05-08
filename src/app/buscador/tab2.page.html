@@ -1,17 +1,186 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
     <ion-title>
-      Tab 2
+      <img src="assets/img/logo-butaca.png" alt="ButacApp" style="height: 30px;">
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-avatar class="user-avatar">
+        <img src="assets/img/avatar-user.jpg" />
+      </ion-avatar>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content color="dark">
+  <!-- 1. Buscador dinámico -->
+  <div class="search-container" style="display: flex; align-items: center; padding-right: 10px;">
+    <div style="flex-grow: 1;">
+      <ion-searchbar 
+        *ngIf="filtroActivo !== 'Género' && filtroActivo !== 'Más Valoradas'"
+        #searchbar
+        class="custom-search"
+        [placeholder]="filtroActivo === 'Título' ? 'Buscar películas...' : 
+                      filtroActivo === 'Año' ? 'Escribe un año (ej. 2023)...' :
+                      filtroActivo === 'Director' ? 'Buscar por director...' : 'Buscar...'"
+        (ionInput)="onSearchChange($event)"
+        [debounce]="500">
+      </ion-searchbar>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+      <!-- Lista Desplegable (Visible SOLO para Género) -->
+      <ion-item *ngIf="filtroActivo === 'Género'" class="custom-select-item" lines="none">
+        <ion-icon name="apps-outline" slot="start" color="medium"></ion-icon>
+        <ion-select 
+          placeholder="Despliega para elegir un género" 
+          interface="action-sheet" 
+          cancelText="Cancelar"
+          (ionChange)="onGeneroChange($event)">
+          <!-- Recorremos la lista de géneros que ya tienes en el servicio -->
+          <ion-select-option *ngFor="let g of tmdbService.generosLista" [value]="g.id">
+            {{ g.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <!-- Botón Random Lúdico a la derecha -->
+    <ion-button (click)="buscarAlAzar()" class="btn-random" color="warning" fill="solid" shape="round">
+      <ion-icon slot="icon-only" name="dice-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+
+  <!-- 2. Botón de Filtros Unificado (Reemplaza a los chips y botones de género) -->
+  <div class="filters-container" style="display: flex; justify-content: flex-end; padding-right: 15px;">
+    <ion-button (click)="abrirMenuFiltros()" fill="clear" color="primary">
+      <ion-icon slot="start" name="filter-outline"></ion-icon>
+      Filtros ({{ filtroActivo }})
+    </ion-button>
+  </div>
+
+  <!-- 3. Título de resultados -->
+  <div class="results-header">
+    <h2 class="ion-no-margin">
+      <span class="red-text">{{ filtroActivo }}</span> 
+      {{ mostrandoPopulares ? 'Sugeridas' : 'Resultados' }}
+    </h2>
+    <!-- Botón Ver Todas -->
+    <ion-button fill="clear" size="small" color="primary" (click)="toggleExpandir()">
+      {{ mostrandoPopulares ? (filtroActivo === 'Género' && generoSeleccionado ? 'Ver todas de ' + generoSeleccionado : 'Ver todas') : 'Contraer' }}
+      <ion-icon [name]="mostrandoPopulares ? 'arrow-forward' : 'arrow-up'" slot="end"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- 4. Indicador de carga -->
+  <div *ngIf="cargando" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p style="color: gray;">Buscando en la base de datos...</p>
+  </div>
+
+  <!-- 5. Listado de películas -->
+  <div *ngIf="!cargando">
+    <ion-card class="movie-card" *ngFor="let peli of peliculas" (click)="abrirModal(peli)">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="4" class="poster-col">
+            <div class="poster-container">
+              <img [src]="peli.poster_path ? 'https://image.tmdb.org/t/p/w500' + peli.poster_path : 'assets/no-poster.png'" />
+              <div class="rating-badge">
+                <ion-icon name="star"></ion-icon>
+                <span>{{ peli.vote_average | number:'1.1-1'}}</span>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col size="8" class="info-col">
+            <div class="title-row">
+              <h3>{{ peli.title }}</h3>
+              <span class="year">{{ peli.release_date | date:'yyyy' }}</span>
+            </div>
+            
+            <p class="overview">{{ peli.overview }}</p>
+
+            <div class="extra-info">
+              <div class="credits">
+                <span class="label">Popularidad</span>
+                <span class="value">{{ peli.popularity | number:'1.0-0' }} pts</span>
+              </div>
+              <div class="genres">
+                {{ tmdbService.getNombreGenero(peli.genre_ids) }}
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!cargando && peliculas.length === 0 && ultimoTerminoBuscado.trim().length > 0" 
+       class="empty-state-container ion-text-center ion-padding" 
+       style="margin-top: 50px;">
+       
+    <ion-icon name="search-outline" style="font-size: 80px; color: #444; margin-bottom: 15px;"></ion-icon>
+    <h3 style="color: #fff; font-weight: bold;">Sin resultados</h3>
+    <p style="color: #999; max-width: 250px; margin: 0 auto;">
+      No pudimos encontrar ninguna película que coincida con "<span style="color: var(--ion-color-primary);">{{ ultimoTerminoBuscado }}</span>". 
+      Intenta con otros términos o cambia el filtro.
+    </p>
+    
+    <ion-button fill="clear" color="primary" (click)="buscarAlAzar()" style="margin-top: 20px;">
+      <ion-icon slot="start" name="dice-outline"></ion-icon>
+      Probar mi suerte
+    </ion-button>
+  </div>
+
+  <!-- 6. Modal de Detalle Expandido -->
+  <ion-modal #modal [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 0.7]" [backdropBreakpoint]="0.5">
+    <ng-template>
+      <ion-content class="ion-padding modal-detalle" color="dark" *ngIf="peliSeleccionada" [scrollY]="true">
+        <div class="modal-header" *ngIf="peliSeleccionada">
+          <h2 style="color: white; font-weight: bold;">{{ peliSeleccionada.title }}</h2>
+          <ion-chip color="primary">
+            <ion-icon name="time-outline"></ion-icon>
+            <ion-label>Año: {{ peliSeleccionada.release_date | date:'yyyy' }}</ion-label>
+          </ion-chip>
+        </div>
+        <p style="color: #ccc; line-height: 1.5;">{{ peliSeleccionada.overview || 'Sin descripción disponible.' }}</p>
+        
+        <!-- Datos del Director -->
+        <div style="margin-bottom: 15px;">
+          <span style="color: gray; font-size: 14px;">Director:</span>
+          <span style="color: white; font-weight: bold; margin-left: 5px;">{{ directorModal }}</span>
+        </div>
+
+        <!-- Plataformas de Streaming -->
+        <div style="margin-bottom: 20px;">
+        <span style="color: gray; font-size: 14px; display: block; margin-bottom: 8px;">Disponible en:</span>
+        <div *ngIf="plataformasModal.length === 0" style="color: #ff4961; font-size: 14px;">
+          No disponible en streaming (Argentina)
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <img *ngFor="let plat of plataformasModal" 
+              [src]="'https://image.tmdb.org/t/p/w92' + plat.logo_path" 
+              style="width: 40px; border-radius: 8px;" 
+              [alt]="plat.provider_name" />
+        </div>
+      </div>
+
+        <!-- Botón para la lista de pendientes -->
+        <ion-button 
+          expand="block" 
+          [color]="estaEnPendientes(peliSeleccionada) ? 'success' : 'danger'" 
+          [disabled]="estaEnPendientes(peliSeleccionada)"
+          (click)="agregarAPendientes(peliSeleccionada!)"
+          shape="round">
+
+          <ion-icon 
+            [name]="estaEnPendientes(peliSeleccionada) ? 'checkmark-circle' : 'bookmark-outline'" 
+            slot="start">
+          </ion-icon>
+
+          {{ estaEnPendientes(peliSeleccionada) ? 'Agregada a la lista' : 'Agregar a mis pendientes' }}      
+        
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

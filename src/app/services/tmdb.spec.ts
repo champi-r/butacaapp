@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
-import { Tmdb } from './tmdb';
+import { TmdbService } from './tmdb';
 
 describe('Tmdb', () => {
-  let service: Tmdb;
+  let service: TmdbService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Tmdb);
+    service = TestBed.inject(TmdbService);
   });
 
   it('should be created', () => {

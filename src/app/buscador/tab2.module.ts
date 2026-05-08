@@ -1,10 +1,9 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './buscador.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BuscadorPage } from './tab2.page';
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 
 @NgModule({
@@ -12,9 +11,10 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page]
+  declarations: [BuscadorPage]
 })
 export class Tab2PageModule {}

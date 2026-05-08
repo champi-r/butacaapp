@@ -1,0 +1,169 @@
+// ── Variables globales de ButacApp ───────────────────────────────
+:root {
+  --color-acento: #e50914;
+  --color-card: #1a1a1a;
+  --color-texto-sec: #aaa;
+}
+
+.custom-select-item {
+  --background: var(--color-card);
+  --color: #ffffff;
+  --border-radius: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  
+  ion-select {
+    width: 100%;
+    color: #ffffff;
+    --placeholder-color: #8c8c8c;
+    --placeholder-opacity: 1;
+  }
+}
+
+// ── Buscador ─────────────────────────────────────────────────────
+.custom-search {
+  --background: var(--color-card); 
+  --color: #ffffff;
+  --icon-color: #8c8c8c;
+  --placeholder-color: #8c8c8c;
+  --border-radius: 12px;
+  box-shadow: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+// ── Filtros ───────────────────────────────────────────────────────
+.filters-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: #000; 
+
+  .filter-chip {
+    --background: #262626; // Gris oscuro para los no seleccionados 
+    --color: #ffffff;
+    --border-radius: 20px;
+    height: 40px;
+    margin: 0;
+    transition: all 0.3s ease; // Animación suave al cambiar
+
+    ion-icon { font-size: 18px; margin-right: 4px; }
+    ion-label { font-weight: 500; font-size: 14px; }
+
+    // Clase que se aplica cuando el filtro está seleccionado
+    &.active {
+      --background: var(--color-acento); 
+      --color: #ffffff;
+      font-weight: bold;
+    }
+  }
+}
+
+.generos-container {
+  display: flex; flex-wrap: wrap;
+  gap: 8px; padding: 10px 16px;
+
+  .genero-btn {
+    background: #262626; color:  #fff;
+    border: none; border-radius: 16px;
+    padding: 6px 14px; font-size: 0.85rem;
+    cursor: pointer; transition: background 0.2s ease;
+
+    &.activo {
+      background: var(--color-acento);
+      font-weight: bold;
+    }
+  }
+}
+
+
+// ── Encabezado de resultados ──────────────────────────────────────
+.results-header {
+  padding: 20px 16px 10px;
+  h2 { font-size: 1.2rem; color: white; font-weight: bold; }
+  .red-text { color: var (--color-acento); }
+  .results-count { color: #666; font-size: 0.8rem; margin: 0; }
+}
+
+// ── Tarjeta de película ───────────────────────────────────────────
+.movie-card {
+  background: var(--color-card);
+  border-radius: 16px;
+  margin: 10px 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  --padding-start: 0; 
+  --padding-end: 0;
+
+  .poster-container {
+    position: relative;
+    img { border-radius: 12px; display: block; width: 100%; height: auto; }
+    
+    .rating-badge {
+      position: absolute; bottom: 8px; left: 8px;
+      background: #f1c40f; color: black;
+      padding: 2px 6px; border-radius: 6px;
+      display: flex; align-items: center; gap: 4px;
+      font-size: 0.75rem; font-weight: bold;
+
+      ion-icon { font-size: 0.8rem; }
+    }
+  }
+
+  .info-col {
+    padding-left: 10px;
+    display: flex; flex-direction: column; justify-content: space-between;
+
+    .title-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      h3 { color: white; margin: 0; font-size: 1.1rem; flex: 1; padding-right: 5px; }
+      .year { color: #666; font-size: 0.9rem; }
+    }
+
+    .overview {
+      color: var(--color-texto-sec); font-size: 0.85rem; margin: 10px 0;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; // Corta el texto después de 2 líneas
+    }
+
+    .extra-info {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      font-size: 0.75rem;
+      .label { color: #666; font-style: italic; display: block; }
+      .value { color: #999; }
+      .genres { color: #777; text-align: right; max-width: 50%; }
+    }
+  }
+}
+
+// ── Modal ButacApp ────────────────────────────────────────────────
+ion-modal {
+  --border-radius: 24px 24px 0 0;
+  --background: rgba(18, 18, 18, 0.97);
+  --backdrop-opacity: 0.6;
+
+  &::part(handle) {
+    background: rgba(255, 255, 255, 0.3);
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+  }
+}
+
+.modal-detalle {
+  --padding-bottom: 30px;
+}
+
+/* Estilo interactivo para el botón random */
+.btn-random {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+  --box-shadow: 0 4px 10px rgba(var(--ion-color-warning-rgb), 0.4);
+  transition: transform 0.2s ease;
+  
+  /* Animación al hacer clic */
+  &:active {
+    transform: scale(0.85) rotate(25deg);
+  }
+}
