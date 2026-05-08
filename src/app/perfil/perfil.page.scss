@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap'); 
+.header {
+    background-color: #0A0A0A;
+}
+ion-content {
+  --background: #121212; 
+}
+.header__logo,
+.header__avatar {
+  width: 50px;
+  height: auto;
+}
+
+.header__titulo {
+    color: #f72832;
+    font-size: 1.7rem;
+    font-weight: 700;
+    padding-left: 5px; 
+}
+.content_color {
+  color: white;
+}
+
+.photo-container {
+  position: relative;
+  width: 120px; 
+}
+
+.profile-photo {
+  --border-radius: 25px; 
+  width: 120px;
+  height: 120px;
+  border: 2px solid #FFB4AA;
+}
+
+.edit-btn {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  --box-shadow: none;
+  width: 32px;
+  height: 32px;
+}
+
+.user-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.user-bio {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+.color_list_number{
+  color: #FFB4AA;
+}
+ion-segment {
+  --indicator-color: #FFB4AA; 
+  background: transparent;
+}
+
+ion-segment-button {
+  --color: #ffffff;
+  --color-checked: #FFB4AA;
+  font-weight: 700;
+  --background-checked: transparent;
+  --indicator-box-shadow: none;
+  text-transform: capitalize;
+}
+.dynamic-container {
+  min-height: 300px; 
+  transition: all 0.3s ease-in-out;
+  background-color: #121212;
+}
+
+.movie-placeholder {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  border: 1px dashed #444;
+}
