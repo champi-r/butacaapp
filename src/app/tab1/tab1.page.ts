@@ -10,6 +10,7 @@ import { Peliculas } from '../../app/peliculas';
 export class Tab1Page {
 
   listaPeliculas: any;
+  cantidadNotificaciones = 3;
 
   constructor(
     public peliculas: Peliculas

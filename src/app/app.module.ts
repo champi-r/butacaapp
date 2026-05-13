@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { Peliculas } from '../app/peliculas';
 import { provideHttpClient } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],

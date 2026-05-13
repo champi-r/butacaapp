@@ -1,44 +1,94 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-grid class="header">
-      <ion-row>
-        <ion-col size="10">
-          <ion-row>
-            <ion-img src="../../assets/img/logo-butaca.png" alt="Logo Butaca App" class="header__logo">
-            </ion-img>
-            <ion-title class="header__titulo">
-              utacaApp
-            </ion-title>
+<ion-header translucent="true" class="custom-header">
 
-          </ion-row>
-        </ion-col>
-        <ion-col size="2">
-          <ion-avatar class="header__avatar">
-            <img alt="Silhouette of a person's head" src="../../assets/img/avatar-user.jpg" />
-          </ion-avatar>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-toolbar>
+
+    <div class="header-container">
+
+      <!-- IZQUIERDA -->
+
+      <div class="header-brand">
+
+        <img src="../../assets/img/logo-butaca.png" alt="Butaca App">
+
+        <h1>ButacaApp</h1>
+
+      </div>
+
+      <!-- DERECHA -->
+
+      <div class="header-actions">
+
+        <ion-button fill="clear">
+
+          <ion-icon name="notifications-outline">
+          </ion-icon>
+
+          <!-- BADGE -->
+
+          <ion-badge *ngIf="cantidadNotificaciones > 0">
+
+            {{ cantidadNotificaciones }}
+
+          </ion-badge>
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
   </ion-toolbar>
+
 </ion-header>
+
 
 <ion-content fullscreen="true">
 
-  <div class="hero">
+  <!-- HERO -->
+
+  <div class="hero" *ngIf="listaPeliculas?.length"
+    [style.background-image]="'url(https://image.tmdb.org/t/p/original' + listaPeliculas[0].backdrop_path + ')'">
 
     <div class="overlay"></div>
 
-    <div class="hero-content" *ngFor="let pelicula of listaPeliculas">
-      <span class="badge"></span>
-      <h1> {{pelicula.title}} </h1>
-      <p>{{pelicula.overview}}</p>
+    <div class="hero-content">
 
-      <ion-button>
-        Ver Trailer
-      </ion-button>
-      <ion-button fill="outline">
-        <ion-icon name="add-outline"></ion-icon> Agregar
-      </ion-button>
+      <span class="badge">TOP ESTRENO</span>
+
+      <h1>{{ listaPeliculas[0].title }}</h1>
+
+      <p>
+        {{ listaPeliculas[0].overview }}
+      </p>
+
+      <div class="hero-buttons">
+
+        <ion-button>
+          ▶ Ver ahora
+        </ion-button>
+
+        <ion-button fill="outline">
+          <ion-icon name="add-outline"></ion-icon>
+          Mi Lista
+        </ion-button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CARTELERA -->
+
+  <div class="section">
+
+    <h2>Recomendadas</h2>
+
+    <div class="movies-slider">
+
+      <app-movie-card *ngFor="let pelicula of listaPeliculas" [pelicula]="pelicula">
+      </app-movie-card>
+
     </div>
 
   </div>
